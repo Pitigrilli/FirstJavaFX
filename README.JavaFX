@@ -1,0 +1,32 @@
+Für Java JDK 11, JavaFX ist nicht mehr Teil des OpenJDK
+
+1. Create a Java project (again, not a JavaFX project), 
+
+2. add the JavaFX library to the module-path as above, 
+Man kann die benötigten jar Dateien einzeln hinzufügen (javafx.controls, javafx.base, javafx.graphics als Minimum)
+
+oder
+
+Bequem ist es eine globale Library einzurichten: 
+Tools-> Libraries -> New Library Namen einegeb zB OpenJFX11, Add /Jar/Folder
+dann jar-Dateien auswählen (nicht src.zip).
+
+
+3. Java Modul erstellen:
+Ziel ist es die benötigten Libraries anzugeben 
+
+module org.jack {
+    requires javafx.controls;
+    exports org.jack;
+}
+
+4. and now you will need to add these VM options both for compiling and running:
+
+ --module-path=/path/to/javafx-sdk-11/lib --add-modules=javafx.controls
+
+Auf 18.04 hatte ich openjfx über apt installiert. Die Bibliothek wurden so eingebunden.
+
+ --module-path=/usr/share/openjfx/lib --add-modules=javafx.controls
+
+5. Die JavaFX Klassen kommen in das Package org.jack.
+The project should run fine.
